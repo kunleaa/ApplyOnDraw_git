@@ -52,12 +52,11 @@ public class DrawView extends View {
 	float mean_oriacc = 0;
 	
 	public DrawView(Context context) {
-	super(context);
-    //定义地图的参数
-    para_map = new Parameter_Map();
-    //绘制轨迹
-    trajectory = new Trajectory(para_map);
-	// TODO Auto-generated constructor stub
+		super(context);
+	    //定义地图的参数
+	    para_map = new Parameter_Map();
+	    //绘制轨迹
+	    trajectory = new Trajectory(para_map);
 	}
 
 	/**

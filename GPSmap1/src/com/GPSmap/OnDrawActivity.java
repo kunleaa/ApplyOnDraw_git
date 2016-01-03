@@ -14,14 +14,22 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 public class OnDrawActivity extends Activity {
-	
+	int time_delay = 10;
 	private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
             	int heigth = layout.getHeight();
-    			layout.setLayoutParams(new LinearLayout.LayoutParams((int)(heigth*0.3399), heigth));
-    			drawView.para_map.set_paramter_map(heigth);
+            	if(heigth == 0)
+            	{
+            		removeMessages(msg.what);
+            		sendMessageDelayed(obtainMessage(msg.what),time_delay);
+            	}
+            	else
+            	{
+	    			layout.setLayoutParams(new LinearLayout.LayoutParams((int)(heigth*0.3399), heigth));
+	    			drawView.para_map.set_paramter_map(heigth);
+            	}
             }
             super.handleMessage(msg);
         }
@@ -67,7 +75,7 @@ public class OnDrawActivity extends Activity {
         //设置地图长宽适当的值
         Message msg = new Message();
         msg.what = 0;
-        handler.sendMessageDelayed(msg,1);
+        handler.sendMessageDelayed(msg,time_delay);
     }
     
     protected void onResume() {

@@ -1,29 +1,20 @@
 package com.displeyline;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +24,7 @@ import android.widget.Toast;
 public class DisplayLineActivity extends Activity {
 	private static String SERVERIP = "192.168.0.3";//服务器端的IP地址  
     private static final int SERVERPORT = 54321;//发送的端口
+    private final int SETMAP = 0;
     private final int DEBUG = 1;
     private final int DATA = 2;
     private boolean issetipaddr = false;
@@ -45,12 +37,26 @@ public class DisplayLineActivity extends Activity {
     private LinearLayout layout;
 	DrawView drawView;
 	Thread thread_recieve;
+	int time_delay = 10;
 	
 	private Handler handler = new Handler() {
-		 
         @Override
         public void handleMessage(Message msg) {
             // TODO 接收消息并且去更新UI线程上的控件内容
+        	if(msg.what == SETMAP)
+        	{
+            	int heigth = layout.getHeight();
+            	if(heigth == 0)
+            	{
+            		removeMessages(msg.what);
+            		sendMessageDelayed(obtainMessage(msg.what),time_delay);
+            	}
+            	else
+            	{
+	    			layout.setLayoutParams(new LinearLayout.LayoutParams((int)(heigth*0.3399), heigth));
+	    			drawView.para_map.set_paramter_map(heigth);
+            	}
+        	}
             if (msg.what == DEBUG) {
             	drawView.debug_text = String.valueOf(msg.obj);
             }
@@ -71,10 +77,8 @@ public class DisplayLineActivity extends Activity {
         //隐藏title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        layout = (LinearLayout)  findViewById(R.id.layout);//找到这个空间
+        layout = (LinearLayout)  findViewById(R.id.background);//找到这个空间
         drawView = new DrawView(this);//创建自定义的控件
-        drawView.setMinimumHeight(300);
-        drawView.setMinimumWidth(500);
         layout.addView(drawView);//将自定义的控件进行添加
         edit_ipaddr = (EditText) findViewById(R.id.edit_ipaddr);
         edit_ipaddr.setInputType(EditorInfo.TYPE_CLASS_PHONE);
@@ -118,6 +122,11 @@ public class DisplayLineActivity extends Activity {
         }
         //定时器定时显示
         drawView.invalidate();
+        
+        //设置地图长宽适当的值
+        Message msg = new Message();
+        msg.what = SETMAP;
+        handler.sendMessageDelayed(msg,time_delay);
     }
     @Override
     protected void onStop() {
@@ -129,6 +138,12 @@ public class DisplayLineActivity extends Activity {
 			e.printStackTrace();
 		} 
     	super.onStop();
+    }
+    @Override
+    protected void onResume()
+    {
+    	
+    	super.onResume();
     }
     
     public class ReceiveMessage implements Runnable{

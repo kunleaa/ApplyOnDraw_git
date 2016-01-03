@@ -1,15 +1,10 @@
 package com.displeyline;
 
-import java.math.BigDecimal;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.view.View;
-import android.widget.EditText;
 
 public class DrawView extends View {
 	String mReceivedMsg ="0000 0000"; 
@@ -24,10 +19,12 @@ public class DrawView extends View {
 	float[] pointsLine = new float[bufflength];
 	float temp0=0;
 	float temp1=0;
+    //地图显示参数
+	public Parameter_Map para_map;
 	
 	public DrawView(Context context) {
-	super(context);
-	// TODO Auto-generated constructor stub
+		super(context);
+		para_map = new Parameter_Map();
 	}
 
 	/**
@@ -36,7 +33,6 @@ public class DrawView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		canvas.drawColor(Color.WHITE);//底色是白色
 		//接收到的坐标点
 		receiveMessage = mReceivedMsg.split(" ");
 		points[0] =Float.parseFloat(receiveMessage[0]);
@@ -86,5 +82,27 @@ public class DrawView extends View {
 		//generalTool.saveToSDcard(drawView.points1);
 		return;
 	}
+	
+    public class Parameter_Map
+    {
+    	//实验楼的长和宽是分别是 4400mm 和 1500m
+    	float WIDTH_BUILD = 1495;
+    	float HEIGHT_BUILD = 4400;
+    	float screenWidth = 0;
+        float screenHeight = 0;
+        //比例  画布的高（像素）/实际长度（毫米）
+        float ratio = 0;
+        
+        void set_paramter_map(int heightPixels)
+        {
+        	screenHeight = heightPixels;
+            screenWidth = (int) (screenHeight*0.3399);   
+            ratio = screenHeight/HEIGHT_BUILD;
+        }
+        float convert_buildtoscreen(float length)
+        {
+        	return length*ratio;
+        }
+    }
 }
 
