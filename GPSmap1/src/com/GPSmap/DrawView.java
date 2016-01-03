@@ -10,7 +10,7 @@ public class DrawView extends View {
 	//参数信息显示开关
 	boolean switch_info = false;
     //地图显示参数
-	public Parameter_Map para_map ;
+	public Parameter_Map para_map;
 	//路径信息相关
 	public Trajectory trajectory;
 	
@@ -289,7 +289,7 @@ public class DrawView extends View {
 		{
 			//起始位置坐标
     		StepTranslate[0] = para_map.convert_buildtoscreen(750);
-            StepTranslate[1] = para_map.convert_buildtoscreen(2200);
+            StepTranslate[1] = para_map.convert_buildtoscreen(50);
 		}
 		
 		public void cleanalldata()

@@ -57,9 +57,9 @@ public class Controller_View
 	        	//≈‰÷√¥” ”Õº¥Ê¥¢µΩsdø®
 	        	config.Read_ViewtoSD(edit_start,edit_end,edit_mode,edit_stepparam,edit_distance);
 			}
-			else
+			else if(config.MODE == Selector_Model.CALIBRATE)
 			{
-				if(Selector_Model.NAVIGATE == (edit_mode.getText().toString().equalsIgnoreCase("n") == true ? Selector_Model.NAVIGATE:Selector_Model.CALIBRATE))
+				if(edit_mode.getText().toString().equalsIgnoreCase("n") == true || edit_mode.getText().toString().equalsIgnoreCase("s") == true)
 				{
 					//≈‰÷√¥” ”Õº¥Ê¥¢µΩsdø®
 		        	config.Read_ViewtoSD(edit_start,edit_end,edit_mode,edit_stepparam,edit_distance);
@@ -74,11 +74,16 @@ public class Controller_View
 						((Button)v).setText("RUNNING");
 				}
 			}
+			else if(config.MODE == Selector_Model.SIMPLE_NAVIGATE)
+			{
+				//≈‰÷√¥” ”Õº¥Ê¥¢µΩsdø®
+	        	config.Read_ViewtoSD(edit_start,edit_end,edit_mode,edit_stepparam,edit_distance);
+			}
         	//“˛≤ÿº¸≈Ã
             final InputMethodManager imm = (InputMethodManager)activity.getSystemService(
             	      Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }  
+        }
 	}
 	
 	class OCL_Clean implements OnClickListener
