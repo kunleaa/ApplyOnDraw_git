@@ -219,8 +219,6 @@ public class DrawView extends View {
 				Trans(distonestep);
 				//构造路径
 				GetPointsLine();
-				//传数位置据给通信服务
-				SocketService.StepPoints = StepTranslate;
 			}
 			return pointsLine;
 		}
@@ -310,6 +308,14 @@ public class DrawView extends View {
 			//总长度
 			sumdistance = 0;
 		}
+		
+		float [] getposition()
+		{
+			float [] temp = new float[2];
+			temp[0] = parmap.convert_screentobuild(StepTranslate[0]);
+			temp[1] = parmap.convert_screentobuild(StepTranslate[1]);
+			return temp;
+		}
 	}
 	
     public class Parameter_Map
@@ -333,6 +339,10 @@ public class DrawView extends View {
         float convert_buildtoscreen(float length)
         {
         	return length*ratio;
+        }
+        float convert_screentobuild(float length)
+        {
+        	return length/ratio;
         }
     }
 }

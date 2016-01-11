@@ -35,8 +35,12 @@ public class DrawView extends View {
 		super.onDraw(canvas);
 		//接收到的坐标点
 		receiveMessage = mReceivedMsg.split(" ");
-		points[0] =Float.parseFloat(receiveMessage[0]);
-		points[1] =Float.parseFloat(receiveMessage[1]);
+		points[0] = Float.parseFloat(receiveMessage[0]);
+		points[1] = Float.parseFloat(receiveMessage[1]);
+		//建筑距离转化到地图距离
+		points[0] = para_map.convert_buildtoscreen(points[0]);
+		points[1] = para_map.convert_buildtoscreen(points[1]);
+		
 		GetPointsLine(points);
 		
 		Paint paint=new Paint();//设置一个笔

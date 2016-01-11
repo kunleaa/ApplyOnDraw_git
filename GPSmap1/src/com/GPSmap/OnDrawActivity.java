@@ -113,6 +113,8 @@ public class OnDrawActivity extends Activity {
 				//导航？校准（方向）
 				selector_model.selectfunction(config,data_sensor,controller_view,drawView);
 				drawView.trajectory.setpaintdata();
+				//传数位置据给通信服务
+				socketSc.SetStepPoints(drawView.trajectory.getposition());
 			}
 			else if(event.sensor.getType()==Sensor.TYPE_ORIENTATION){
 				 data_sensor.set_orien(event.values);

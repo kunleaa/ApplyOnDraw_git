@@ -27,7 +27,7 @@
         android:label="@string/app_name" >
         <meta-data  
         android:name="com.baidu.lbsapi.API_KEY"  
-        android:value="cMhg3AFXcA8mGwMvb4LLT7xB" />  
+        android:value="4IQe3ExZdd3GDEzmB7VeLsj7" />  
         <activity
             android:label="@string/app_name"
             android:name=".GPSmapActivity" >

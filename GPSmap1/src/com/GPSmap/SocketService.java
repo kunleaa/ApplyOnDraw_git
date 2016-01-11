@@ -16,7 +16,7 @@ public class SocketService extends Service {
     Socket client;
     ServerSocket server = null;
     
-    static float [] StepPoints=new float[2];
+    private static float [] StepPoints=new float[2];
     int tempflag = 0;
     public IBinder onBind(Intent intent) {  
         // TODO Auto-generated method stub  
@@ -85,5 +85,9 @@ public class SocketService extends Service {
         }  
           
     }  
+    public void SetStepPoints(float[] point)
+    {
+    	StepPoints = point;
+    }
 
 }
